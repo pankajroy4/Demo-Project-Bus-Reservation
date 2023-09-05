@@ -1,0 +1,48 @@
+<%- if controller_name != 'sessions' %>
+<p class="mb-0 pb-lg-2" style='color: #393f81;'>
+  Already have an user account? <%=link_to "Login here",new_user_session_path %> <br>
+  Login as Bus owner? <%=link_to "Login here",new_bus_owner_session_path %>
+  <br>
+  Create a Bus owner account? <%=link_to "Create here",new_bus_owner_registration_path%>
+</p>
+
+<% end %>
+
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <%= link_to "Forgot your password?", new_password_path(resource_name),class:"small "  %>
+<% end %>
+
+
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <p class="mb-0 pb-lg-2" style='color: #393f81;'>
+  Don't have an user account? <%=link_to "Register here",new_user_registration_path %><br>
+  Login as Bus owner? <%=link_to "Login here",new_bus_owner_session_path %>
+  <br>
+  Create a Bus owner account? <%=link_to "Create here",new_bus_owner_registration_path%>
+  </p>
+<% end %>
+
+
+
+
+
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+<% end %>
+
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+<% end %>
+
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+  <% end %>
+<% end %>
+
+
+<span class="m-0 p-0">
+  <a href="#!" class="small text-muted">Terms of use</a>
+  <a href="#!" class="small text-muted">| Privacy policy</a>
+</span>

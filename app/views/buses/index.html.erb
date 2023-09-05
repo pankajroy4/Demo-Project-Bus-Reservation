@@ -1,0 +1,49 @@
+<% if current_user_admin? %>
+  <div class="col-md-12 col-xl-12 text-center mt-3 ">
+    <div class="card-block text-center">
+      <h2 class="text-right"><span class="border-bottom">Bus Listed By <%= @busowner.name%></span></h2>
+    </div>
+  </div>
+<%end%>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <ul class="list-group shadow">
+        <% @buses .each do |bus|%>
+          <li class="list-group-item">
+            <div class="media align-items-lg-center flex-column flex-lg-row p-2">
+              <div class="row">
+                <div class="col-lg-8 mx-auto mt-3">
+                  <div class="media-body order-2 order-lg-1">
+                    <h3 class:"mt-0 font-weight-bold mb-2>
+                      <%= link_to bus.name,bus_owner_bus_path(bus.bus_owner,bus.id) %>
+                    </h3>
+                    <h3 class="font-italic text-muted mb-0 pt-3 small">
+                      Status: <%= bus.approved ? "Approved" : "Not Approved"%>
+                    </h3>
+                    <% if current_user_admin? %>
+                      <%if bus.approved %>
+                        <%= link_to "Disapprove",disapprove_path(@busowner.id,bus.id),class:"btn btn-outline-danger mt-2" %>
+                      <%else%>
+                        <%= link_to "Approve",approve_path(@busowner.id,bus.id),class:"btn btn-outline-success mt-2" %>
+                      <%end%>
+                    <%end%>
+                  </div>
+                </div>
+                <div class="col-lg-2 mx-auto">
+                  <% if bus.main_image.attached?%>
+                    <%= image_tag bus.main_image,class:"ml-lg-5 img-fluid"%>
+                  <%else%>
+                    <%=image_tag "bus_logo2.png" ,class:"ml-lg-5 img-fluid m-0 p-0"%>
+                  <%end%>
+                </div>
+              </div>
+            </div>
+          </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</div>
+
