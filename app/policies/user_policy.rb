@@ -3,10 +3,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    user.type=="Admin" || (user == record)
+    user.admin? || (user == record)
   end
   
   def update?
     user == record
+  end
+
+  def index?
+    user.admin?
   end
 end

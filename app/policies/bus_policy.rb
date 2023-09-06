@@ -1,12 +1,14 @@
 class BusPolicy < ApplicationPolicy
-  # class Scope < Scope
-  #   def resolve
-  #     scope.where(bus_owner_id: user.id)
-  #   end
-  # end
+  class Scope < Scope
+    
+  end
 
   def update?
-    user&.type=="BusOwner" && user&.id == record.bus_owner_id
+    user.bus_owner? && (user.id == record.id)
+  end
+
+  def view?
+    user.bus_owner? && (user.id == record.bus_owner_id)
   end
 
   def edit?
@@ -14,15 +16,19 @@ class BusPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.type=="BusOwner" && user&.id == record.bus_owner_id
+    user.bus_owner? && user.id == record.id
   end
 
   def reservations_list?
-    user&.type=="BusOwner" && user&.id == record.bus_owner_id
+    user.bus_owner? && record.approved? && record.approved?
   end
   
   def get_list?
-    user&.type=="BusOwner" && user&.id == record.bus_owner_id
+    user.bus_owner? && (record.bus_owner_id == user.id) 
+  end
+
+  def index?
+    user.admin? || user.bus_owner?
   end
 end
 

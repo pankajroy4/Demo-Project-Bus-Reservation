@@ -2,7 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :bus
   belongs_to :user
   belongs_to :seat
-  validates :date, presence:{message: "should be given"}
+  validates :date, presence: {message: "should be given"}
 
   def self.display_current_day_seats!(bus)
     reservations_today = bus.reservations.where(date: Date.today)
@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
   end
 
   def self.check_booked(seat_id,bus_id,date)
-    result=Reservation.where(seat_id: seat_id).where(date: date).where(bus_id: bus_id)
+    result = Reservation.where(seat_id: seat_id).where(date: date).where(bus_id: bus_id)
     result.blank? 
   end
 
@@ -34,5 +34,4 @@ class Reservation < ApplicationRecord
     end
     true
   end
-
 end

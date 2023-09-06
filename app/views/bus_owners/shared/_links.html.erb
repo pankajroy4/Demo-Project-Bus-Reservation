@@ -1,26 +1,24 @@
 <%- if controller_name != 'sessions' %>
-  <p class="mb-0 pb-lg-1" style='color: #393f81;'>
-    Already have a bus owner account? <%=link_to "Login here",new_bus_owner_session_path %> <br>
-    Login as User? <%=link_to "Login here",new_user_session_path %>
+  <p class = "mb-0 pb-lg-1" style = 'color: #393f81;'>
+    Already have a bus owner account? <%= link_to "Login here", new_bus_owner_session_path %> <br>
+    Login as User? <%= link_to "Login here", new_user_session_path %>
     <br>
-    Create an User account? <%=link_to "Create here",new_user_registration_path%>
+    Create an User account? <%= link_to "Create here", new_user_registration_path %>
   </p>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?",new_password_path(resource_name),class:"small "%><br>
+  <%= link_to "Forgot your password?", new_password_path(resource_name), class:"small" %><br>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <p class="mb-0 pb-lg-2" style='color: #393f81;'>
-    Don't have a bus owner account? <%=link_to "Register here",new_bus_owner_registration_path %> <br>
-    Login as an User? <%=link_to "Login here",new_user_session_path %>
+  <p class = "mb-0 pb-lg-2" style = 'color: #393f81;'>
+    Don't have a bus owner account? <%= link_to "Register here", new_bus_owner_registration_path %> <br>
+    Login as an User? <%= link_to "Login here", new_user_session_path %>
     <br>
-    Create an User account? <%=link_to "Create here",new_user_registration_path%>
+    Create an User account? <%= link_to "Create here", new_user_registration_path %>
   </p>
 <% end %>
-
-
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
   <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
@@ -37,6 +35,6 @@
 <% end %>
 
 <span class="m-0 p-0">
-  <a href="#!" class="small text-muted">Terms of use</a>
-  <a href="#!" class="small text-muted">| Privacy policy</ a>
+  <a href = "#!" class = "small text-muted">Terms of use</a>
+  <a href = "#!" class = "small text-muted">| Privacy policy</ a>
 </span>

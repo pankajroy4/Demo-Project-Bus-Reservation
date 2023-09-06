@@ -5,15 +5,14 @@ class AdminPolicy < ApplicationPolicy
   end
 
   def show?
-    user&.type=="Admin" && user==record
+    user.admin? && user.id == record.id
   end
 
   def disapprove?
-    user&.type=="Admin" 
+    user.admin?
   end
    
   def approve?
-    user&.type=="Admin" 
+    user.admin?
   end
-
 end

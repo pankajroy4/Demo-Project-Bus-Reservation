@@ -6,4 +6,7 @@ class ReservationPolicy < ApplicationPolicy
     end
   end
   
+  def destroy?
+    user.id == record&.id
+  end
 end

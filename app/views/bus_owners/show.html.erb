@@ -3,7 +3,7 @@
 <div class="col-md-4 gradient-custom text-center" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; background-color: #F8F8FF; border-right-style:inset">
     <%=image_tag "default_profile_icon.png" ,class:"img-fluid my-5" ,style:"width:80px" %>
     <h5> <%= @bus_owner.name %></h5>
-    <p><%= @bus_owner.type %></p>
+    <p><%= @bus_owner.user_type %></p>
     <%if bus_owner_signed_in?%>
         <h6><%= link_to "My Bookings",bookings_path(@bus_owner.id), class:"btn btn-outline-success mt-2" %></h6> 
     <%end%>

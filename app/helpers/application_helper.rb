@@ -1,6 +1,7 @@
 module ApplicationHelper
+  
   def current_user_admin?
-      current_user&.type=="Admin"
+      current_user&.admin?
   end
 
   def signed_in?
@@ -8,7 +9,6 @@ module ApplicationHelper
   end
 
   def current_user?(user)
-    (( current_user==user) || (current_bus_owner == user))
+    (( current_user&.id == user&.id ) || ( current_bus_owner&.id == user&.id ))
   end
-
 end
