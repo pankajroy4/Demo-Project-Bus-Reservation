@@ -3,20 +3,26 @@ class AdminsController < ApplicationController
 	before_action :authorize_admin, only: [:show, :approve, :disapprove]
 
 	def show
+		@admin = current_user
 	end
 
 	def approve
 		@bus = Bus.find(params[:id])
-		@bus.approve!
-		redirect_to bus_owner_buses_path(params[:bus_owner]), 
-		notice: 'Bus approved successfully!'
+    if @bus.approve!
+      render json: { status: 'success', message: 'Bus approved successfully' }
+    else
+      render json: { status: 'error', message: 'Failed to approve bus' }
+    end
+
 	end
 
 	def disapprove
 		@bus = Bus.find(params[:id])
-		@bus.disapprove!
-		redirect_to bus_owner_buses_path(params[:bus_owner]), 
-		alert: 'Bus approval cancelled!'
+    if @bus.disapprove!
+      render json: { status: 'success', message: 'Bus disapproved successfully' }
+    else
+      render json: { status: 'error', message: 'Failed to disapprove bus' }
+    end
 	end
 	
 	private

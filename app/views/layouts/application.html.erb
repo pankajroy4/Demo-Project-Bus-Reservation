@@ -7,6 +7,7 @@
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'bus_logo2' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -29,6 +30,8 @@
       </div>
     <% end %>
 
+    <div class = "alert alert-success custom_alert custom_success text-center" role = "alert"></div>
+    <div class = "alert alert-danger custom_alert custom_danger text-center" role = "alert"></div>
     <%= yield %>
 
     <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>

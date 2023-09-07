@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'button' %>
+
 <section>
 	<div class = "container py-5">
 		<div class = "row justify-content-center">
@@ -27,26 +29,23 @@
 					</div>
 					<% if current_user_admin? || bus_owner_signed_in? %>
 						<div class = "d-flex justify-content-between">
-							<span>Status:</span><span><%= @bus.approved ? "Approved" : "Not Approved" %></span>
+							<span>Status:</span><span class="status"><%= @bus.approved ? "Approved" : "Not Approved" %></span>
 						</div>
 					<% end %>
 					<div class = "row">
-						<div class = "d-flex flex-column flex-sm-row justify-content-between">
+						<div class = "d-flex flex-column flex-sm-row justify-content-evenly">
 							<% if policy(@bus).view? %>
 								<%= link_to "Update Bus", edit_bus_owner_bus_path(@busowner, @bus), class: "btn btn-outline-success m-2" %>
 								<%= button_to "Remove Bus", bus_owner_bus_path(@busowner, @bus), method: :delete, class: "btn btn-outline-danger  m-2", style: 'width: 95%;' %>
 								<%= link_to "Reservations List", get_list_path(@bus), class: "btn btn-outline-success m-2" %>
 							<% end %>
-							<% if @bus.approved? %>
-									<%= link_to "Book Ticket", reservation_home_path(@bus), class: "btn btn-outline-success  m-2" %>
-							<% end %>
-							<% if current_user_admin? %>
-								<% if @bus.approved %>
-									<%= link_to "Disapprove", disapprove_path(@busowner.id, @bus.id), class: "btn btn-outline-danger m-2" %>
-								<% else %>
-									<%= link_to "Approve", approve_path(@busowner.id, @bus.id), class: "btn btn-outline-success m-2" %>
+							<%= link_to "Book Ticket", reservation_home_path(@bus), class: "btn btn-outline-success  m-2 book" %>
+							<div class="button_container">
+								<% if current_user_admin? %>
+									<button class="disapprove-button btn btn-outline-danger m-2" data-bus-id= '<%= @bus.id %>' > Disapprove</button>
+									<button class="approve-button btn btn-outline-success m-2" data-bus-id = '<%= @bus.id%>'>Approve</button>
 								<% end %>
-							<% end %>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -54,3 +53,6 @@
 		</div>
 	</div>
 </section>
+
+<span id="bus-card" data-approved="<%= @bus.approved? %>">
+</span>

@@ -42,7 +42,10 @@ Rails.application.routes.draw do
 
   get "/reservation_home/:bus_id", to: "reservations#reservation_home", as: :reservation_home
  
-  get 'approve/:bus_owner/bus/:id', to: "admins#approve", as: :approve 
-  get 'disapprove/:bus_owner/bus/:id', to: "admins#disapprove", as: :disapprove 
+  # get 'approve/:bus_owner/bus/:id', to: "admins#approve", as: :approve 
+  # get 'disapprove/:bus_owner/bus/:id', to: "admins#disapprove", as: :disapprove 
+
+  post 'approve/:id', to: "admins#approve", as: :approve
+  post 'disapprove/:id', to: "admins#disapprove", as: :disapprove
 
 end

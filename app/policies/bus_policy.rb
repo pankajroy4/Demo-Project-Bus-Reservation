@@ -8,7 +8,7 @@ class BusPolicy < ApplicationPolicy
   end
 
   def view?
-    user.bus_owner? && (user.id == record.bus_owner_id)
+    user&.bus_owner? && (user.id == record.bus_owner_id)
   end
 
   def edit?

@@ -22,13 +22,19 @@
                     <h3 class = "font-italic text-muted mb-0 pt-3 small">
                       Status: <%= bus.approved ? "Approved" : "Not Approved" %>
                     </h3>
-                    <% if current_user_admin? %>
+                    
+                    <%
+=begin%>
+ <% if current_user_admin? %>
                       <% if bus.approved %>
                         <%= link_to "Disapprove", disapprove_path(@busowner.id, bus.id), class: "btn btn-outline-danger mt-2" %>
                       <% else %>
                         <%= link_to "Approve", approve_path(@busowner.id, bus.id), class:"btn btn-outline-success mt-2" %>
                       <% end %>
-                    <% end %>
+                    <% end %> 
+<%
+=end%>
+
                   </div>
                 </div>
                 <div class="col-lg-2 mx-auto">
