@@ -24,11 +24,6 @@
 									</div>
 									<div class = "form-outline mb-3">
 										<%= f.email_field :email, placeholder: "Enter email", required: "", autofocus:true, class: "form-control form-control-mg" %>
-										<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-											<div>Currently waiting confirmation for: 
-												<%= resource.unconfirmed_email %>
-											</div>
-										<% end %>
 									</div>
 									<%= f.hidden_field :user_type, value: 'bus_owner' %>
 									<div class = "form-outline mb-3">

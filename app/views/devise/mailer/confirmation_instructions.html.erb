@@ -1,0 +1,7 @@
+<p>Welcome <span><%= @resource.user_type %>:</span> <%= @email %>!</p>
+<p>You can confirm your account email through the link below:</p>
+<%if @resource.user_type=="user" || @resource.user_type=="admin" %>
+  <p><%= link_to 'Confirm my account', user_confirmation_url(confirmation_token: @token) %></p>
+<%else%>
+  <p><%= link_to 'Confirm my account', bus_owner_confirmation_url(confirmation_token: @token) %></p>
+<%end%>

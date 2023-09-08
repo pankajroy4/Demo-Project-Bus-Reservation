@@ -8,16 +8,20 @@ Rails.application.routes.draw do
   
   get "admin_show/:id", to: "admins#show", as: :admin_show
   
-  devise_for :bus_owners, class_name: "User", controllers: { 
-    registrations: "bus_owners/registrations", 
-    sessions: "bus_owners/sessions",
-    passwords: "bus_owners/passwords" }
-
   devise_for :users, controllers: {
     registrations: 'users/registrations', 
     sessions: "users/sessions",
-    passwords: "users/passwords"
+    passwords: "users/passwords",
+    confirmations: "users/confirmations"
   }
+  
+  devise_for :bus_owners, class_name: "User", controllers: { 
+    registrations: "bus_owners/registrations", 
+    sessions: "bus_owners/sessions",
+    passwords: "bus_owners/passwords",
+    confirmations: "bus_owners/confirmations" 
+  }
+
   
   resources :users, only: [:show, :index]
 
