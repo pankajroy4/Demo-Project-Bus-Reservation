@@ -2,9 +2,9 @@
 <%= render "shared/errors", object: resource %>
 
 <section >
-  <div class = "container py-5 h-100 ">
+  <div class = "container py-4 h-100 ">
     <div class = "row d-flex justify-content-center align-items-center">
-      <div class = "col col-xl-10">
+      <div class = "col col-xl-8">
         <div class = "card shadow" style = "border-radius: 1rem;">
           <div class = "row g-0 pb-3">
             <div class = "col-md-6 col-lg-5 d-none d-md-block text-center">
@@ -40,7 +40,7 @@
                     <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "form-control form-control-mg", autocomplete: "new-password" %>        
                   </div>
                   <div class = "form-outline mb-3">
-                    <i>(we need your current password to confirm your changes)</i><br />
+                    <i class="small">(we need your current password to confirm your changes)</i><br />
                     <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current password", class: "form-control form-control-mg" %>
                   </div>
                   <div class = "pt-1 mb-1">

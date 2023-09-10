@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
   
   root "homes#index"
+  get "admin_show/:id", to: "admins#show", as: :admin_show
   
   devise_scope :user do
     get "/admin_login", to: "users/sessions#new"
   end
-  
-  get "admin_show/:id", to: "admins#show", as: :admin_show
   
   devise_for :users, controllers: {
     registrations: 'users/registrations', 
@@ -21,35 +20,23 @@ Rails.application.routes.draw do
     passwords: "bus_owners/passwords",
     confirmations: "bus_owners/confirmations" 
   }
-
   
   resources :users, only: [:show, :index]
-
+  
   resources :bus_owners do 
     resources :buses
   end
-
-  get "/bookings/:user_id", to: "reservations#booking", as: :bookings
-
-  post "/get_resv_list", to: "buses#reservations_list", as: :get_resv_list
-
-  delete "/reservations/:bus_id/:reservation_id/:id", to: "reservations#destroy", as: :cancel_ticket
-
+  
   resources :buses do 
     resources :reservations, only: [:create, :index]
   end
-  
-  post "/searched_seat", to: "reservations#searched_seat", as: :searched
-  post "/searched_bus", to: "homes#search", as: :search
- 
-  get "/get_list/:bus_id", to: "buses#get_list", as: :get_list
 
-  get "/reservation_home/:bus_id", to: "reservations#reservation_home", as: :reservation_home
- 
-  # get 'approve/:bus_owner/bus/:id', to: "admins#approve", as: :approve 
-  # get 'disapprove/:bus_owner/bus/:id', to: "admins#disapprove", as: :disapprove 
-
-  post 'approve/:id', to: "admins#approve", as: :approve
-  post 'disapprove/:id', to: "admins#disapprove", as: :disapprove
+  get "/searched_bus", to: "homes#search", as: :search
+  get "/bookings/:user_id", to: "reservations#booking", as: :bookings
+  get "/get_resv_list/:bus_id", to: "buses#reservations_list", as: :get_resv_list
+  delete "/reservations/:bus_id/:reservation_id/:id", to: "reservations#destroy", as: :cancel_ticket
+  get "/new_ticket/:bus_id", to: "reservations#new", as: :new_ticket
+  patch 'approve/:bus_owner_id/:id', to: "admins#approve", as: :approve
+  patch 'disapprove/:bus_owner_id/:id', to: "admins#disapprove", as: :disapprove
 
 end

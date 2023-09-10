@@ -1,29 +1,24 @@
 class BusesController < ApplicationController
 	before_action :authenticate_bus_owner!, only: [:new,:edit, :update, :destroy]
 	before_action :authenticate_admin_or_bus_owner!, only: [:index]
-	before_action :set_bus_owner, only: [:edit, :update, :destroy, :index]
+	before_action :authorize_bus_owner, only: [:edit, :update, :destroy, :index]
 
 	def reservations_list
-		@date = Date.parse(params[:date])
+		@date = params[:date]
 		@bus = Bus.find(params[:bus_id])
 		@reservations = @bus.reservations.where(date: @date)
 		authorize @bus
 	end
-
-	def get_list
-		@bus = Bus.new(id: params[:bus_id], bus_owner_id: current_bus_owner&.id)
-		@date = Date.today
-		authorize @bus
-	end
-
-	def index
-		@busowner = BusOwner.find(params[:bus_owner_id])
-		@buses = @busowner.buses.all
-	end
-
+	
 	def new
 		@busowner = BusOwner.find(params[:bus_owner_id])
 		@bus = @busowner.buses.new
+	end
+
+	def show   
+		@busowner = BusOwner.find(params[:bus_owner_id])
+		@bus = @busowner.buses.find(params[:id])
+		@available_seats = @bus.seats
 	end
 
 	def create
@@ -37,12 +32,10 @@ class BusesController < ApplicationController
 		end
 	end
 
-	def show   
-		@busowner = BusOwner.find(params[:bus_owner_id])
-		@bus = @busowner.buses.find(params[:id])
-		@available_seats = @bus.seats
+	def index
+		@buses = @busowner.buses.all
 	end
-	
+
 	def edit
 		@bus = @busowner.buses.find(params[:id])
 	end
@@ -70,7 +63,7 @@ class BusesController < ApplicationController
 		params.require(:bus).permit(:name, :registration_no, :route, :total_seat, :approved, :main_image)
 	end
 
-	def set_bus_owner
+	def authorize_bus_owner
 		@busowner = BusOwner.find_by(id: params[:bus_owner_id])
 		authorize @busowner, policy_class: BusPolicy
 	end

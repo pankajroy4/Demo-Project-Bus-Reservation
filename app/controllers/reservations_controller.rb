@@ -2,16 +2,10 @@ class ReservationsController < ApplicationController
 	before_action :authenticate_any!
 	before_action :require_approved, except: [:booking]
 	
-	def reservation_home  # this will run when user click on "book ticket" on bus show page
+	def new #this will execute when user click on "check availability/book ticket"
 		@user = active_user
 		@reservation = Reservation.new 
-		@available_seats = Reservation.display_current_day_seats!(@bus)
-	end
-
-	def searched_seat #this will execute when user click on "check availity"
-		@user = active_user
-		@reservation = Reservation.new 
-		@date = params[:date]
+		@date = params[:date] || Date.today
 		@available_seats = Reservation.display_searched_date_seats(@bus, @date)
 	end
 
@@ -23,7 +17,7 @@ class ReservationsController < ApplicationController
 		date = param[:date]
 		parsed_date = Date.parse(date)
 		@success = Reservation.create_reservations(user_id, bus_id, seat_ids, parsed_date)
-		@success ? ( redirect_to bookings_path(user_id), notice: "Booking successful!") : (redirect_to reservation_home_path(bus_id), status: :see_other, alert: "Please select seat first!")
+		@success ? ( redirect_to bookings_path(user_id), notice: "Booking successful!") : (redirect_to new_ticket_path(bus_id), status: :unprocessable_entity, alert: "Please select seat first!")
 	end
 
 	def destroy
@@ -31,8 +25,10 @@ class ReservationsController < ApplicationController
 		@user = User.find_by(id: params[:id])
 		authorize @user, policy_class: ReservationPolicy
 		@reservation.destroy 
-		redirect_to  bookings_path(active_user.id),  
-		status: :see_other,notice: "Ticket cancelled successfully!"
+		respond_to do |format|
+			format.html {redirect_to  bookings_path(active_user.id),notice: "Ticket cancelled!." }
+			format.turbo_stream {	flash.now[:alert] = "Ticket Cancelled!."}
+		end
 	end
 
 	def booking

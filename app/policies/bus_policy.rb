@@ -20,15 +20,12 @@ class BusPolicy < ApplicationPolicy
   end
 
   def reservations_list?
-    user.bus_owner? && record.approved? && record.approved?
-  end
-  
-  def get_list?
-    user.bus_owner? && (record.bus_owner_id == user.id) 
+    user.bus_owner? && record.approved? && (record.bus_owner_id == user.id) 
   end
 
   def index?
-    user.admin? || user.bus_owner?
+   (user.admin? || user.bus_owner? ) 
   end
+
 end
 

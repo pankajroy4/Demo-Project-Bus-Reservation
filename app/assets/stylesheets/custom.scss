@@ -146,7 +146,7 @@ body::-webkit-scrollbar-thumb{
   background-color: whitesmoke;
 }
 
-.seat-checkbox:checked + label {
+.seat-checkbox:checked + label,.seat-checkbox:hover {
   background-color: #ffc107; 
   color: #fff;
 }

@@ -5,36 +5,20 @@
     <meta name = "viewport" content = "width=device-width, initial-scale = 1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= turbo_include_tags %>
+    <%= javascript_include_tag 'application' %>
     <%= favicon_link_tag 'bus_logo2' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   </head>
 
   <body>
     <%= render "layouts/header" %>
-    <% if flash[:notice] %> 
-      <div class = "alert alert-success" role = "alert">
-          <h6> <%= flash[:notice] %> </h6>
-      </div>
-    <% end %>
-
-    <% if flash[:alert] %> 
-      <div class = "alert alert-danger" role = "alert">
-         <h6> <%= flash[:alert] %> </h6>
-      </div>
-    <% end %>
-
-    <% if flash[:error] %> 
-      <div class = "alert alert-danger" role = "alert">
-        <h6><%= flash[:error] %> </h6>
-      </div>
-    <% end %>
-
-    <div class = "alert alert-success custom_alert custom_success text-center" role = "alert"></div>
-    <div class = "alert alert-danger custom_alert custom_danger text-center" role = "alert"></div>
+    <div class = "flash" id="flash">
+      <%= render "layouts/flash" %>
+	  </div>
     <%= yield %>
-
-    <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity = "sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin = "anonymous"></script>
   </body>
 </html>

@@ -4,11 +4,6 @@ class Reservation < ApplicationRecord
   belongs_to :seat
   validates :date, presence: {message: "should be given"}
 
-  def self.display_current_day_seats!(bus)
-    reservations_today = bus.reservations.where(date: Date.today)
-    seat_ids_booked = reservations_today.pluck(:seat_id)
-    bus.seats.where.not(id: seat_ids_booked)
-  end
 
   def self.display_searched_date_seats(bus,date)
     reservations_on_searched_date = bus.reservations.where(date: date)

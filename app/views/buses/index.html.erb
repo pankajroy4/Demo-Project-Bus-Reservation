@@ -17,24 +17,27 @@
                 <div class = "col-lg-8 mx-auto mt-3">
                   <div class = "media-body order-2 order-lg-1">
                     <h3 class= "mt-0 font-weight-bold mb-2">
-                      <%= link_to bus.name, bus_owner_bus_path(bus.bus_owner, bus.id) %>
+                      <%= link_to bus.name, bus_owner_bus_path(@busowner.id, bus.id),  data:    {turbo_frame: "_top"} %>
                     </h3>
-                    <h3 class = "font-italic text-muted mb-0 pt-3 small">
-                      Status: <%= bus.approved ? "Approved" : "Not Approved" %>
-                    </h3>
-                    
-                    <%
-=begin%>
- <% if current_user_admin? %>
-                      <% if bus.approved %>
-                        <%= link_to "Disapprove", disapprove_path(@busowner.id, bus.id), class: "btn btn-outline-danger mt-2" %>
-                      <% else %>
-                        <%= link_to "Approve", approve_path(@busowner.id, bus.id), class:"btn btn-outline-success mt-2" %>
-                      <% end %>
-                    <% end %> 
-<%
-=end%>
-
+                      Status:
+                      <%= turbo_frame_tag bus do %>
+										    <span ><%= bus.approved ? "Approved" : "Not Approved" %></span>
+								      <% end %>
+                 
+                    <% if current_user_admin? %>
+								      <%= turbo_frame_tag "turbo_buttons_#{bus.id}" do %>
+									      <% if bus.approved? %>
+										      <%= link_to "Disapprove", disapprove_path(@busowner.id,bus.id),  data:    {turbo_frame: bus} , data: {'turbo-method': :patch}, class: "btn btn-outline-danger m-2" %>
+									      <% else %>
+										      <%= link_to "Approve", approve_path(@busowner.id,bus.id), data:     {turbo_frame: bus},data: {'turbo-method': :patch},  class: "btn btn-outline-success m-2" %>
+									      <% end %>
+								      <% end %>
+							      <% end %>
+                    <%= turbo_frame_tag "book_#{bus.id}" do %>
+								      <% if bus.approved? %>
+									      <%= link_to "Book Ticket", new_ticket_path(bus.id), class: "btn btn-outline-success  m-2 book" ,data: {turbo_frame: "_top"}  %>
+								      <% end %>
+							      <% end %>
                   </div>
                 </div>
                 <div class="col-lg-2 mx-auto">

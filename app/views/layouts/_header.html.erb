@@ -3,17 +3,15 @@
 	<div class = "container-fluid">
 		<%= image_tag "bus_logo2.png", class: "logo" %> 
 		<%= link_to "Bus Reservation", root_path, class: "navbar-brand text-white btn btn-outline-light" %> 
-
-		<button class = "navbar-toggler" type = "button" data-bs-toggle = "collapse" data-bs-target = "#navbarSupportedContent" aria-controls = "navbarSupportedContent" aria-expanded = "false" aria-label = "Toggle navigation">
-		<span class = "navbar-toggler-icon"></span>
-		</button>
-
-		<div class = "collapse navbar-collapse" id = "navbarSupportedContent">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
 			<ul class = "navbar-nav me-auto mb-2 mb-lg-0">
 				<%if signed_in? %>
 					<li class = "nav-item">
-						<a class = "nav-link" href = "#">
+						<a class = "nav-link" >
 							<%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light" %>
 						</a>
 					</li>
@@ -29,8 +27,10 @@
 				<% end %>
 				<% unless signed_in? %>
 					<li class = "nav-item dropdown">
-						<a class = "nav-link dropdown-toggle btn btn-outline-light " href = "#" role = "button" data-bs-toggle = "dropdown" aria-expanded = "false">Login</a>
-						<ul class="dropdown-menu">
+						<a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Login link
+          </a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<li> <%= link_to "User LogIn", new_user_session_path, class: "dropdown-item "%></li>
 							<li> <%= link_to "User signup", new_user_registration_path, class: "dropdown-item "%></li>
 							<li> <hr class = "dropdown-divider"> </li>
@@ -40,15 +40,15 @@
 					</li>
 				<% end %>
 			</ul>
-			<%= form_with(url: :search) do | f | %>
+			<%= form_with(url: :search, method: :get) do | f | %>
 				<div class = "input-group gap-2">
-				<%= f.text_field :user_query, value: params[:user_query], class: "form-control search me-2", placeholder: "Type bus name or route" %>
+					<%= f.text_field :user_query, value: params[:user_query], class: "form-control search me-2", placeholder: "Type bus name or route" %>
 					<div class = "input-group-append">
-						<%= f.submit "Search", class: "btn btn-outline-light" %>
+						<%= f.submit "Search", class: "btn btn-outline-light",  data:  {turbo_frame: "searched_bus"} %>
 					</div>
 				</div>
 			<% end %>
-
+			
 		</div>
 	</div>
 </nav>
