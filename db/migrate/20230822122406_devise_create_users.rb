@@ -9,7 +9,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :registration_no
  
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
+      t.string :email, null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -31,6 +31,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.datetime :confirmed_at
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email # Only if using reconfirmable
+      t.datetime :otp_sent_at
+      t.string :otp 
 
       ## Lockable
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts

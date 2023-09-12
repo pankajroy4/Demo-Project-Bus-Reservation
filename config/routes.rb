@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   
   devise_scope :user do
     get "/admin_login", to: "users/sessions#new"
+
+    get  "/otp_verification", to: "users/confirmations#otp_verification", as: :verify 
+    post "/verify", to: "users/confirmations#verify_otp", as: :verify_otp
+
+    patch "/verification" , to: "users/sessions#otp_verification", as: :verify_login 
+    patch "/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
   
   devise_for :users, controllers: {
@@ -27,6 +33,7 @@ Rails.application.routes.draw do
     resources :buses
   end
   
+  get "/new_ticket/:bus_id", to: "reservations#new", as: :new_ticket
   resources :buses do 
     resources :reservations, only: [:create, :index]
   end
@@ -35,7 +42,6 @@ Rails.application.routes.draw do
   get "/bookings/:user_id", to: "reservations#booking", as: :bookings
   get "/get_resv_list/:bus_id", to: "buses#reservations_list", as: :get_resv_list
   delete "/reservations/:bus_id/:reservation_id/:id", to: "reservations#destroy", as: :cancel_ticket
-  get "/new_ticket/:bus_id", to: "reservations#new", as: :new_ticket
   patch 'approve/:bus_owner_id/:id', to: "admins#approve", as: :approve
   patch 'disapprove/:bus_owner_id/:id', to: "admins#disapprove", as: :disapprove
 

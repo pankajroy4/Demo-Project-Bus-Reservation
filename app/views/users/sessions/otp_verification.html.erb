@@ -1,0 +1,13 @@
+
+<%= form_with( url: :user_session, method: :post) do |f| %>
+  <%= f.hidden_field :email, value: @email %>
+  <%= f.hidden_field :remember_me, value: @remember_me %>
+  <%= f.label :otp, 'OTP' %>
+  <%= f.text_field :otp,value: "" %>
+  <%= f.submit 'Submit',class:"btn btn-outline-success m-2" %>
+<% end %>
+
+<%= form_with(url: :resend_otp,method: :patch) do |f| %>
+  <%= f.hidden_field :email, value: @email%>
+  <%= f.submit "Resend OTP",class:"btn btn-outline-success m-2" %>
+<% end %>

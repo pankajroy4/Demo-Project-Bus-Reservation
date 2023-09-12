@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 	rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
-	# private
+	private
 
 	def user_not_authorized
 		redirect_to root_path, 
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 	end
 
 	def pundit_user
-		active_user
+		active_user  
 	end
 
 	def authenticate_admin_or_bus_owner!

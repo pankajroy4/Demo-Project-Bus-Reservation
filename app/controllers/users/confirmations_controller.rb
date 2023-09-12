@@ -1,6 +1,26 @@
-# frozen_string_literal: true
+
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
+  
+  def otp_verification
+    @token = params[:confirmation_token]
+    @user = User.find_by(confirmation_token: @token)
+  end
+
+  def verify_otp
+    @token = params[:confirmation_token]
+    @user = User.find_by(confirmation_token: @token)
+
+    if @user&.valid_otp?(params[:user][:otp])
+      redirect_to user_confirmation_path(confirmation_token: params[:user][:confirmation_token])
+    else
+      flash.now[:alert] = 'Invalid OTP'
+      render :otp_verification, status: :unprocessable_entity
+    end
+    
+  end
+
+  # user_confirmation_path
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -15,6 +35,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def show
   #   super
   # end
+  
 
   # protected
 

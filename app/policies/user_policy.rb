@@ -3,7 +3,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || (user == record)
+    record.present? && (user.admin? || (user == record))
   end
   
   def update?

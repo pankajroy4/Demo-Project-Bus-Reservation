@@ -1,0 +1,12 @@
+
+<%= turbo_frame_tag "otp" do%>
+  <%= form_with model: @user, url: verify_otp_path(confirmation_token: @token), method: :post do |f| %>
+    <%= f.hidden_field :confirmation_token, value: @token %>
+    <%= f.label :otp, 'OTP' %>
+    <%= f.text_field :otp,value: "" %>
+    <%= f.submit 'Submit',data: {turbo_frame: "_top"} %>
+  <% end %>
+
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name),data: {turbo_frame: "_top"} %><br/>
+
+<% end %>
