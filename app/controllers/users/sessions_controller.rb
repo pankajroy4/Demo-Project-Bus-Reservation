@@ -20,14 +20,17 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def resend_otp
-    user = User.find_by(email: params[:email])
+    email = params[:email]
+    user = User.find_by(email: email)
     if user
       user.generate_and_send_otp
-      flash.now[:alert] = 'OTP resended, check your mail!.'
-      render :otp_verification
+      flash.now[:notice] = 'OTP resended, check your mail!'
+      respond_to do |format|
+        format.html {render :otp_verification, status: :ok}
+        format.turbo_stream {	flash.now[:notice] = 'OTP resended, check your mail please!.'}
+      end
     else
-      flash.now[:alert] = 'Invalid email address.'
-      redirect_to root_path, alert: "Something wrong!"
+      redirect_to root_path, alert: 'Invalid email address.'
     end
   end
 
@@ -36,11 +39,15 @@ class Users::SessionsController < Devise::SessionsController
     remember_me = params[:remember_me]
     if user && user.valid_otp?(params[:otp])
       user.update!(remember_me: remember_me)
-      sign_in(user)
-      redirect_to user_path(user.id), notice: 'Logged in successfully!'
+      sign_in(:user, user)
+      if user.admin?
+        redirect_to admin_show_path(user.id), notice: 'Admin logged in successfully!'
+      else 
+        redirect_to user_path(user.id), notice: 'Logged in successfully!'
+      end
     else
       flash.now[:alert] = 'Invalid email or OTP.'
-      render :otp_verification
+      render :otp_verification , status: :unprocessable_entity
     end
   end
 
@@ -57,5 +64,21 @@ class Users::SessionsController < Devise::SessionsController
   end
 end
 
+
+
+
+
+  # def resend_otp
+  #   email = params[:email]
+  #   user = User.find_by(email: email)
+  #   if user
+  #     user.generate_and_send_otp
+  #     flash.now[:notice] = 'OTP resended, check your mail!.'
+  #     render :otp_verification, status: :ok
+  #   else
+  #     flash[:alert] = 'Invalid email address.'
+  #     redirect_to root_path
+  #   end
+  # end
 
 

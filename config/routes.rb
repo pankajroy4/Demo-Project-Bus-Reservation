@@ -12,6 +12,14 @@ Rails.application.routes.draw do
     patch "/verification" , to: "users/sessions#otp_verification", as: :verify_login 
     patch "/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
+
+  devise_scope :bus_owner do 
+    get  "/otp_verification/busowner", to: "bus_owners/confirmations#otp_verification", as: :verify_busowner 
+    post "/verify/busowner", to: "bus_owners/confirmations#verify_otp", as: :verify_otp_busowner
+
+    patch "/verification/busowner" , to: "bus_owners/sessions#otp_verification", as: :verify_login_busowner 
+    patch "/resend_otp/busowner", to: "bus_owners/sessions#resend_otp", as: :resend_otp_busowner
+  end
   
   devise_for :users, controllers: {
     registrations: 'users/registrations', 

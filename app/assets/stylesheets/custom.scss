@@ -161,6 +161,14 @@ body::-webkit-scrollbar-thumb{
   border-radius: 5px !important;
 }
 
+
+.btn{
+  transition: all ease 0.2s !important;
+}
+.btn:active{
+  scale: 0.9 !important;
+}
+
 // .remove_shadow{
 //   border: none !important;
 //   outline: none !important;

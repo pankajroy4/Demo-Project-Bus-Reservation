@@ -3,8 +3,8 @@
 <%if @resource.user_type=="user" || @resource.user_type=="admin" %>
   <p><%= link_to 'Confirm my account',verify_url(confirmation_token: @token) %></p>
 <%else%>
-  <p><%= link_to 'Confirm my account', bus_owner_confirmation_url(confirmation_token: @token) %></p>
+  <p><%= link_to 'Confirm my account', verify_busowner_url(confirmation_token: @token) %></p>
 <%end%>
 
 <p>Your OTP : <%= @resource.otp %></p>
-
+<h3>Render devise/mailer/confirmation_instructions.html.erb</h3>

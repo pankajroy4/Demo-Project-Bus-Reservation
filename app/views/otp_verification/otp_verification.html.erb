@@ -1,6 +1,4 @@
-<p>Welcome <%= @user.email %>!</p>
-
+<p>Welcome <span><%= @user.user_type %>:</span> <%= @user.email %>!</p>
 <p>Someone has logged in your account:</p>
-
 <h2>Your login OTP is :<%= @user.otp%>
 

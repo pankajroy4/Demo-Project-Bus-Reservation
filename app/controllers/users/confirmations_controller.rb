@@ -1,5 +1,4 @@
 
-
 class Users::ConfirmationsController < Devise::ConfirmationsController
   
   def otp_verification
@@ -7,10 +6,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     @user = User.find_by(confirmation_token: @token)
   end
 
-  def verify_otp
+  def verify_otp 
     @token = params[:confirmation_token]
     @user = User.find_by(confirmation_token: @token)
-
     if @user&.valid_otp?(params[:user][:otp])
       redirect_to user_confirmation_path(confirmation_token: params[:user][:confirmation_token])
     else

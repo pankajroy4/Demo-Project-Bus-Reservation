@@ -12,7 +12,7 @@
 						</div>
 						<div class = "col-md-6 col-lg-7 d-flex align-items-center">
 							<div class = "card-body pt-1 p-md-3 text-black">
-								<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+								<%= form_for(resource, as: resource_name, url: verify_login_busowner_path(resource_name),method: :patch) do |f| %>
 									<div class = "d-flex align-items-center mb-2 pb-1">
 										<span class = "h1 fw-bold mb-0"><%= image_tag "bus_logo2.png", class: "form_img" %> </span>
 										<span class = "h2 fw-bold mb-0">Bus owner Login</span>
