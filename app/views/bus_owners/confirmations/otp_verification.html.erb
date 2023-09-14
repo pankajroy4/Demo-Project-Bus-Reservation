@@ -11,7 +11,7 @@
 							<div class = "col-md-6 col-lg-5 d-flex align-items-center">
 								<div class = "card-body pt-1 p-md-3 text-black">
 
-                  <%= form_with model: @user, url: verify_otp_busowner_path(confirmation_token: @token), method: :post do |f| %>
+                  <%= form_with model: @user, url: bus_owner_confirmation_path(confirmation_token: @token), method: :get do |f| %>
 
 										<div class = "d-flex align-items-center mb-3 pb-1">
 											<span class = "h1 fw-bold mb-0">

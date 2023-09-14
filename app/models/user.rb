@@ -1,17 +1,17 @@
+# require 'rotp'
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, :confirmable
 
-  has_many :reservations ,dependent: :destroy
+  has_many :reservations, dependent: :destroy
   enum user_type: { admin: 0, bus_owner: 1, user: 2 }   
 
-  require 'rotp'
 
   def generate_otp
     self.otp = '%06d' % rand(10**6)
     self.otp_sent_at = Time.now
-    save!
-    return self.otp
+    self.save!
+    self.otp
   end
 
   def valid_otp?(otp)
@@ -28,6 +28,7 @@ class User < ApplicationRecord
     UserMailer.custom_confirmation_instructions(self, confirmation_token, otp: otp).deliver_now
   end
 
+  # do correct , make instance method
   def self.send_otp(user)
     user.otp = '%06d' % rand(10**6)
     user.otp_sent_at = Time.now

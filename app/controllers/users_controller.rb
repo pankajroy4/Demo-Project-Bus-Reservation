@@ -7,11 +7,7 @@ class UsersController < ApplicationController
 	end
 
 	def show    
-		@user = User.find_by(id: params[:id])
-		if @user
-			authorize @user
-		else
-			 redirect_to root_path, alert: "Record not found!"
-		end
+		@user = User.find(params[:id])
+		authorize @user
 	end
 end

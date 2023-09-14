@@ -7,16 +7,14 @@ Rails.application.routes.draw do
     get "/admin_login", to: "users/sessions#new"
 
     get  "/otp_verification", to: "users/confirmations#otp_verification", as: :verify 
-    post "/verify", to: "users/confirmations#verify_otp", as: :verify_otp
-
+  
     patch "/verification" , to: "users/sessions#otp_verification", as: :verify_login 
     patch "/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
 
   devise_scope :bus_owner do 
     get  "/otp_verification/busowner", to: "bus_owners/confirmations#otp_verification", as: :verify_busowner 
-    post "/verify/busowner", to: "bus_owners/confirmations#verify_otp", as: :verify_otp_busowner
-
+   
     patch "/verification/busowner" , to: "bus_owners/sessions#otp_verification", as: :verify_login_busowner 
     patch "/resend_otp/busowner", to: "bus_owners/sessions#resend_otp", as: :resend_otp_busowner
   end

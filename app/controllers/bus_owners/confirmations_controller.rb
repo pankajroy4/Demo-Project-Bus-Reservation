@@ -5,20 +5,19 @@ class BusOwners::ConfirmationsController < Devise::ConfirmationsController
   def otp_verification
     @token = params[:confirmation_token]
     @user = BusOwner.find_by(confirmation_token: @token)
-    puts "=============Inside bus owners otp_verification=================="
   end
 
-  def verify_otp
-    puts "=============Inside bus owners verify_otp=================="
+  # GET /resource/confirmation?confirmation_token=abcdef
+  def show
+    params[:confirmation_token] = params[:bus_owner][:confirmation_token]
     @token = params[:confirmation_token]
     @user = BusOwner.find_by(confirmation_token: @token)
     if @user&.valid_otp?(params[:bus_owner][:otp])
-      redirect_to bus_owner_confirmation_path(confirmation_token: params[:bus_owner][:confirmation_token])
+      super
     else
       flash.now[:alert] = 'Invalid OTP'
       render :otp_verification, status: :unprocessable_entity
     end
-  
   end
 
   # GET /resource/confirmation/new
@@ -28,11 +27,6 @@ class BusOwners::ConfirmationsController < Devise::ConfirmationsController
 
   # POST /resource/confirmation
   # def create
-  #   super
-  # end
-
-  # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
   #   super
   # end
 

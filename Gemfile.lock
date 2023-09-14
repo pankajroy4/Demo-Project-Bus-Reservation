@@ -70,8 +70,6 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
-    attr_encrypted (4.0.0)
-      encryptor (~> 3.0.0)
     autoprefixer-rails (10.4.13.0)
       execjs (~> 2)
     bcrypt (3.1.19)
@@ -104,7 +102,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    encryptor (3.0.0)
     erubi (1.12.0)
     execjs (2.8.1)
     ffi (1.15.5)
@@ -150,6 +147,8 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.4-x64-mingw-ucrt)
+      racc (~> 1.4)
+    nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     popper_js (2.11.7)
@@ -220,6 +219,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.6.3-x64-mingw-ucrt)
+    sqlite3 (1.6.3-x86_64-linux)
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     thor (1.2.2)
@@ -254,10 +254,10 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   activerecord-import
-  attr_encrypted
   bcrypt (~> 3.1.7)
   bootsnap
   bootstrap (~> 5.1, >= 5.1.3)

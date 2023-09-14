@@ -6,16 +6,17 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     @user = User.find_by(confirmation_token: @token)
   end
 
-  def verify_otp 
+  # GET /resource/confirmation?confirmation_token=abcdef
+  def show
+    params[:confirmation_token] = params[:user][:confirmation_token]
     @token = params[:confirmation_token]
     @user = User.find_by(confirmation_token: @token)
     if @user&.valid_otp?(params[:user][:otp])
-      redirect_to user_confirmation_path(confirmation_token: params[:user][:confirmation_token])
+      super
     else
       flash.now[:alert] = 'Invalid OTP'
       render :otp_verification, status: :unprocessable_entity
     end
-    
   end
 
   # user_confirmation_path
@@ -28,12 +29,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def create
   #   super
   # end
-
-  # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
-  
 
   # protected
 
