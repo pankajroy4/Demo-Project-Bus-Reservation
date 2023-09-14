@@ -9,8 +9,8 @@ class BusOwners::SessionsController < Devise::SessionsController
   def otp_verification
     # fail
     sign_out(active_user) if active_user
-    @user = BusOwner.find_by(email: params[:bus_owner][:email])
     @email = params[:bus_owner][:email] 
+    @user = BusOwner.find_by(email: @email)
     @remember_me = params[:bus_owner][:remember_me] 
 
     if @user && @user.valid_password?(params[:bus_owner][:password])
@@ -38,7 +38,8 @@ class BusOwners::SessionsController < Devise::SessionsController
   end
 
   def create
-    user = BusOwner.find_by(email: params[:email])
+    @email =  params[:email]
+    user = BusOwner.find_by(email: @email)
     remember_me = params[:remember_me]
     if user && user.valid_otp?(params[:otp])
       user.update!(remember_me: remember_me)

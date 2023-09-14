@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   
   root "homes#index"
@@ -50,5 +52,13 @@ Rails.application.routes.draw do
   delete "/reservations/:bus_id/:reservation_id/:id", to: "reservations#destroy", as: :cancel_ticket
   patch 'approve/:bus_owner_id/:id', to: "admins#approve", as: :approve
   patch 'disapprove/:bus_owner_id/:id', to: "admins#disapprove", as: :disapprove
+
+  mount Sidekiq::Web => "/sidekiq"
+
+  # Myapp::Application.routes.draw do
+  #   # mount Sidekiq::Web in your Rails app
+  # mount Sidekiq::Web => "/sidekiq"
+
+  # end
 
 end

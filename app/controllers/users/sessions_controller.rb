@@ -6,8 +6,8 @@ class Users::SessionsController < Devise::SessionsController
     
   def otp_verification
     sign_out(current_user) if current_user
-    @user = User.find_by(email: params[:user][:email])
     @email = params[:user][:email] 
+    @user = User.find_by(email: @email)
     @remember_me = params[:user][:remember_me] 
 
     if @user && @user.valid_password?(params[:user][:password])
@@ -35,7 +35,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def create
-    user = User.find_by(email: params[:email])
+    @email = params[:email]
+    user = User.find_by(email: @email)
     remember_me = params[:remember_me]
     if user && user.valid_otp?(params[:otp])
       user.update!(remember_me: remember_me)
