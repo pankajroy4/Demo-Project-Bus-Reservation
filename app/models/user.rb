@@ -6,6 +6,9 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   enum user_type: { admin: 0, bus_owner: 1, user: 2 }   
 
+  # after_update :send_welcome_email
+
+
 
   def generate_otp
     self.otp = '%06d' % rand(10**6)
@@ -41,6 +44,12 @@ class User < ApplicationRecord
     update(otp: otp)
     OtpVerification.otp_verification(self, otp).deliver_now
   end
+
+  # private
+  # def send_welcome_email
+  #   SendEmailsJob.perform_now(self)
+  # end
+
 end
 
 

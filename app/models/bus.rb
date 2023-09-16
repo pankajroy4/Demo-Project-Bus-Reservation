@@ -7,6 +7,7 @@ class Bus < ApplicationRecord
   after_create :create_seats
   after_update :adjust_seats
   before_destroy :delete_seats
+  after_update :send_approval_email
 
   validates :name, :route, :total_seat, :registration_no, presence: true
   validates :registration_no, uniqueness: {message: "must be unique and govt. verified"}
@@ -50,6 +51,13 @@ class Bus < ApplicationRecord
       seats.where(bus_id: id).where(" seat_no > ? ", total_seat).destroy_all
     end
   end
+
+
+  private
+  def send_approval_email
+    ApprovalEmailsJob.perform_later(self)
+  end
+
 end
 
 # NOTE: delete_all method will bypass model validations and callbacks ,So in case ,we do not want to bypass validations and callbacks ,use destroy, like: 

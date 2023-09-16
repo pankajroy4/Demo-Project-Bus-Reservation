@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     get  "/otp_verification", to: "users/confirmations#otp_verification", as: :verify 
   
-    patch "/verification" , to: "users/sessions#otp_verification", as: :verify_login 
+    patch "/verification", to: "users/sessions#otp_verification", as: :verify_login 
     patch "/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
 
@@ -53,12 +53,13 @@ Rails.application.routes.draw do
   patch 'approve/:bus_owner_id/:id', to: "admins#approve", as: :approve
   patch 'disapprove/:bus_owner_id/:id', to: "admins#disapprove", as: :disapprove
 
-  mount Sidekiq::Web => "/sidekiq"
-
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+  
   # Myapp::Application.routes.draw do
   #   # mount Sidekiq::Web in your Rails app
   # mount Sidekiq::Web => "/sidekiq"
-
   # end
 
 end

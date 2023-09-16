@@ -9,12 +9,16 @@ class Users::SessionsController < Devise::SessionsController
     @email = params[:user][:email] 
     @user = User.find_by(email: @email)
     @remember_me = params[:user][:remember_me] 
-
-    if @user && @user.valid_password?(params[:user][:password])
-      @user.generate_and_send_otp
-      flash[:notice] = 'A new OTP has been sent to your email.'
+    if @user&.confirmed?
+      if @user.valid_password?(params[:user][:password])
+        @user.generate_and_send_otp
+        flash[:notice] = 'A new OTP has been sent to your email.'
+      else   
+        flash[:alert] = 'Invalid email or password!'
+        redirect_to new_user_session_path
+      end
     else
-      flash[:alert] = 'Invalid email or password!'
+      flash[:alert] = 'You have to confirm your email first!'
       redirect_to new_user_session_path
     end
   end

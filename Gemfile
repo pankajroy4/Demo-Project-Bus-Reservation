@@ -61,7 +61,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "letter_opener"
+  # gem "letter_opener"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -79,6 +79,6 @@ end
 
 gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
-gem "sidekiq"
+gem "sidekiq","~> 7.0.9"
 
 
