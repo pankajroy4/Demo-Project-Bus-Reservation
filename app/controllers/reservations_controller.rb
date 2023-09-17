@@ -17,13 +17,6 @@ class ReservationsController < ApplicationController
 		date = param[:date]
 		parsed_date = Date.parse(date)
 		@success = Reservation.create_reservations(user_id, bus_id, seat_ids, parsed_date)
-
-		# if @success 
-		# 	redirect_to bookings_path(user_id), notice: "Booking successful!" 
-		# else    	 
-		# 	flash.now[:alert] = "Select Date & Seats!"
-		# end 
-
 		respond_to do |format|
 			if @success
 				format.html {redirect_to bookings_path(user_id), notice: "Booking successful!"}
@@ -36,13 +29,17 @@ class ReservationsController < ApplicationController
 	end
 
 	def destroy
-		@reservation = Reservation.find(params[:reservation_id])
+		@reservation = Reservation.find_by(id: params[:reservation_id])
 		@user = User.find_by(id: params[:id])
-		authorize @user, policy_class: ReservationPolicy
-		@reservation.destroy 
-		respond_to do |format|
-			format.html {redirect_to  bookings_path(active_user.id), notice: "Ticket cancelled!." }
-			format.turbo_stream {	flash.now[:alert] = "Ticket Cancelled!."}
+		if @reservation
+			authorize @user, policy_class: ReservationPolicy
+			@reservation.destroy 
+			respond_to do |format|
+				format.html {redirect_to  bookings_path(active_user.id), alert: "Ticket cancelled!." }
+				format.turbo_stream {	flash.now[:alert] = "Ticket Cancelled!."}
+			end
+		else
+			redirect_to bookings_path(active_user.id), alert: "Already cancelled!"
 		end
 	end
 

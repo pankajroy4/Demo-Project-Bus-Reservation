@@ -10,22 +10,19 @@ class Reservation < ApplicationRecord
     bus.seats.where.not(id: seat_ids_booked)
   end
 
-  # do correct
-  def self.check_booked(seat_id, bus_id,date)
+  def self.check_booked?(seat_id, bus_id,date)
     result = Reservation.where(seat_id: seat_id, date: date, bus_id: bus_id)
     result.blank? 
   end
 
   def self.create_reservations(user_id, bus_id, seat_ids, date)
     return false if seat_ids.blank?
-
     reservations = seat_ids.map do |seat_id|
-      next unless Reservation.check_booked(seat_id, bus_id, date)
+      next unless Reservation.check_booked?(seat_id, bus_id, date)
       Reservation.new(user_id: user_id, bus_id: bus_id, seat_id: seat_id, date: date)
-    end.compact
-
+    end
     Reservation.transaction do
-      Reservation.import(reservations) # Using 'activerecord-import' gem
+      Reservation.import(reservations.compact) # Using 'activerecord-import' gem
     end
     true
   end

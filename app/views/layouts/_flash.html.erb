@@ -1,11 +1,11 @@
 
 <%flash.each do |flash_type ,message |%>
 	<%if flash_type == "alert"%>
-		<div class="flash_message alert alert-danger" role = "alert">
+		<div class="flash__message bg-danger"  >
 			<h6><%= message %></h6>
 		</div>
 	<%else%>
-		<div class="flash_message alert alert-success" role = "alert">
+		<div class="flash__message bg-success" >
 			<h6><%= message %></h6>
 		</div>
 	<%end%> 

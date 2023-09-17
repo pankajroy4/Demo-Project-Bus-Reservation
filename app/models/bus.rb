@@ -51,8 +51,7 @@ class Bus < ApplicationRecord
       seats.where(bus_id: id).where(" seat_no > ? ", total_seat).destroy_all
     end
   end
-
-
+  
   private
   def send_approval_email
     ApprovalEmailsJob.perform_later(self)

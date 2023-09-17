@@ -20,7 +20,7 @@
 						<p class = "card-text m-0"><strong>Bus Route:</strong> <%= b.bus.route %></p>
 					</div>
 					<div class = "card-footer text-center">
-						<%= link_to "Cancel Ticket", cancel_ticket_path(b.bus.id, b.id, @user), class: "btn btn-outline-danger" ,data: {'turbo-method': :delete}%>
+						<%= link_to "Cancel Ticket", cancel_ticket_path(b.bus.id, b.id, @user), class: "btn btn-outline-danger" ,data: {'turbo-method': :delete, turbo_frame: "_top" }%>
 					</div>
 				</div>
 			<% end %>
