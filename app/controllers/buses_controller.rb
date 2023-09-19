@@ -1,5 +1,5 @@
 class BusesController < ApplicationController
-	before_action :authenticate_bus_owner!, only: [:new,:edit, :update, :destroy]
+	before_action :authenticate_bus_owner!, only: [:new, :edit, :update, :destroy]
 	before_action :authenticate_admin_or_bus_owner!, only: [:index]
 	before_action :authorize_bus_owner, only: [:edit, :update, :destroy, :index]
 

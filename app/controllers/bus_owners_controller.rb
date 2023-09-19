@@ -7,7 +7,7 @@ class BusOwnersController < ApplicationController
 	end
 	
 	def show    
-		@bus_owner = BusOwner.find_by(id: params[:id])
+		@bus_owner = BusOwner.find(params[:id])
 		authorize @bus_owner, policy_class: BusOwnerPolicy
 	end
 	

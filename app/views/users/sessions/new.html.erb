@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "otp" do%>
+<%= turbo_frame_tag "otp" do %>
 	<%= render "shared/errors", object: resource %>
 	<section>
 		<div class = "container py-4">
@@ -7,11 +7,11 @@
 					<div class = "card shadow" style = "border-radius: 1rem;">
 						<div class = "row g-0">
 							<div class = "col-md-4 col-lg-5 d-none d-md-block text-center">
-									<%= image_tag "login.jpg", class: "img-fluid", style: "border-radius:10px"%>
+								<%= image_tag "login.jpg", class: "img-fluid", style: "border-radius: 10px" %>
 							</div>
 							<div class = "col-md-6 col-lg-7 d-flex align-items-center">
 								<div class = "card-body pt-1 p-md-3 text-black">
-									<%= form_with(url: :verify_login, method: :patch) do | f | %>
+									<%= form_with( url: :verify_login, method: :patch ) do | f | %>
 										<div class = "d-flex align-items-center mb-2 pb-1">
 											<span class = "h1 fw-bold mb-0">
 												<%= image_tag "bus_logo2.png", class: "form_img" %> 

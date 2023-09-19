@@ -1,6 +1,6 @@
 class BusApprovalMailer < ApplicationMailer
-  def approval_email(user)
-    @user = user
-    mail to: @user.bus_owner.email, subject: "Bus approval Email!!"
+  def approval_email(bus)
+    @bus = bus
+    mail to: @bus.bus_owner.email, subject: "Bus approval Email!!"
   end
 end

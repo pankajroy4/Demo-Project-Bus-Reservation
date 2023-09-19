@@ -16,7 +16,7 @@ class BusOwners::SessionsController < Devise::SessionsController
       respond_to do |format|
         format.html {render :otp_verification}
         format.turbo_stream { render turbo_stream: turbo_stream.update("otp", partial: 
-        "bus_owners/sessions/otp_verification",locals: {email: @email, remember_me: @remember_me})}
+        "bus_owners/sessions/otp_verification", locals: {email: @email, remember_me: @remember_me})}
       end
     else 
       if @user 

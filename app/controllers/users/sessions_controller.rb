@@ -9,13 +9,13 @@ class Users::SessionsController < Devise::SessionsController
     @email = params[:email] 
     @user = User.find_by(email: @email)
     @remember_me = params[:remember_me] 
-    if ( (@user && @user.valid_password?(params[:password]) ) && @user&.confirmed?)
+    if (@user&.valid_password?(params[:password]) && @user&.confirmed? && (@user&.admin? || @user&.user?))
       @user.generate_and_send_otp
       flash.now[:notice] = 'A new OTP has been sent to your email.'
       respond_to do |format|
         format.html {render :otp_verification}
         format.turbo_stream { render turbo_stream: turbo_stream.update("otp", partial: 
-        "users/sessions/otp_verification",locals: {email: @email, remember_me: @remember_me})}
+        "users/sessions/otp_verification", locals: {email: @email, remember_me: @remember_me})}
       end
     else 
       if @user 

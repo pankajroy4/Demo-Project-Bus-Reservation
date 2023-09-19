@@ -3,14 +3,13 @@ class Bus < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :seats, dependent: :destroy
   has_one_attached :main_image
+  validates :name, :route, :total_seat, :registration_no, presence: true
+  validates :registration_no, uniqueness: {message: "must be unique and govt. verified"}
   
   after_create :create_seats
   after_update :adjust_seats
   before_destroy :delete_seats
   after_update :send_approval_email
-
-  validates :name, :route, :total_seat, :registration_no, presence: true
-  validates :registration_no, uniqueness: {message: "must be unique and govt. verified"}
 
   scope :approved, -> { where(approved: true) }
   scope :search_by_name_or_route, -> (query) { 
@@ -54,7 +53,7 @@ class Bus < ApplicationRecord
   
   private
   def send_approval_email
-    ApprovalEmailsJob.perform_later(self)
+    ApprovalEmailsJob.set(wait: 1.week).perform_later(self)
   end
 
 end

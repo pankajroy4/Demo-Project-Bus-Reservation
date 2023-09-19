@@ -161,19 +161,12 @@ body::-webkit-scrollbar-thumb{
   border-radius: 5px !important;
 }
 
-
 .btn{
   transition: all ease 0.2s !important;
 }
 .btn:active{
   scale: 0.9 !important;
 }
-
-// .remove_shadow{
-//   border: none !important;
-//   outline: none !important;
-//   box-shadow: none !important;
-// }
 
 @keyframes appear-then-fade {
   0%, 100% {
@@ -206,9 +199,11 @@ body::-webkit-scrollbar-thumb{
     padding: 0.5rem  1rem;
     animation: appear-then-fade 5s both;
     border-radius: 10px;
-  z-index: 2000 !important;
+    z-index: 2000 !important;
 
   }
 }
-
+.turbo-progress-bar {
+  background: linear-gradient(to right, green, red);
+}
 

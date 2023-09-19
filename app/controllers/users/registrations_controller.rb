@@ -1,10 +1,11 @@
-
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
-  # def create
-  # end
+  def new 
+    @type = "user" #needed in views to determine user_type
+    super
+  end
 
   def after_sign_up_path_for(resource)
     user_path(resource) 
@@ -20,6 +21,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :user_type])
+    params[:user][:user_type] = 'user'
   end
 
   def configure_account_update_params

@@ -1,10 +1,11 @@
+
 <%- if controller_name != 'sessions' %>
-<p class = "mb-0 pb-lg-2" style = 'color: #393f81;'>
-  Already have an user account? <%= link_to "Login here", new_user_session_path, data: {turbo_frame: "_top"} %> <br>
-  Login as Bus owner? <%= link_to "Login here", new_bus_owner_session_path, data: {turbo_frame: "_top"} %>
-  <br>
-  Create a Bus owner account? <%= link_to "Create here", new_bus_owner_registration_path, data: {turbo_frame: "_top"} %>
-</p>
+  <p class = "mb-0 pb-lg-2" style = 'color: #393f81;'>
+    Already have an user account? <%= link_to "Login here", new_user_session_path, data: {turbo_frame: "_top"} %> <br>
+    Login as Bus owner? <%= link_to "Login here", new_bus_owner_session_path, data: {turbo_frame: "_top"} %>
+    <br>
+    Create a Bus owner account? <%= link_to "Create here", new_bus_owner_registration_path, data: {turbo_frame: "_top"} %>
+  </p>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>

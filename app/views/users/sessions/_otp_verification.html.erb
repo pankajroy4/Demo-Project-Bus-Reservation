@@ -38,7 +38,7 @@
                   <%= form_with(url: :resend_otp, method: :patch) do |f| %>
                     <%= f.hidden_field :email, value: email%>
                     <div class = "pt-1 mb-3">
-                      <%= f.submit 'Resend OTP',data: {turbo_frame: "_top"} , class: 
+                      <%= f.submit 'Resend OTP',data: {turbo_frame: "_top"}, class: 
 											"btn btn-outline-success btn-mg btn-block"%>
                     </div>   
                   <% end %>

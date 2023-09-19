@@ -10,7 +10,7 @@
                 <div class = "col-lg-8 mx-auto mt-3">
                   <div class = "media-body order-2 order-lg-1">
                     <h3 class = "mt-0 font-weight-bold mb-2">
-                      <%= link_to bus.name,bus_owner_bus_path(bus.bus_owner, bus.id) ,  data:  {turbo_frame: "_top"} %> 
+                      <%= link_to bus.name, bus_owner_bus_path(bus.bus_owner, bus.id), data:  {turbo_frame: "_top"} %> 
                       <%= link_to "Book Ticket", new_ticket_path(bus.id), class: "btn btn-outline-success  m-2",  data:  {turbo_frame: "_top"}%>
                     </h3>
                     <h3 class = "font-italic text-muted mb-0 pt-3 small">

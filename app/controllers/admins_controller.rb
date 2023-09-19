@@ -23,7 +23,7 @@ class AdminsController < ApplicationController
     if @bus.disapprove!
 			respond_to do |format|
 				format.html {redirect_to bus_owner_bus_path(@busowner, @bus), notice: "Bus Disapproved successfully!." }
-				format.turbo_stream {	flash.now[:alert]="Bus Dispproved successfully!."}
+				format.turbo_stream {	flash.now[:alert] = "Bus Dispproved successfully!."}
 			end
     end
   end
