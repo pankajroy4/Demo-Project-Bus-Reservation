@@ -9,7 +9,6 @@ class Bus < ApplicationRecord
   after_create :create_seats
   after_update :adjust_seats
   before_destroy :delete_seats
-  after_update :send_approval_email
 
   scope :approved, -> { where(approved: true) }
   scope :search_by_name_or_route, -> (query) { 
@@ -19,11 +18,13 @@ class Bus < ApplicationRecord
 
   def disapprove!
     update(approved: false)
+    send_approval_email
     reservations.delete_all
   end
 
   def approve!
     update(approved: true)
+    send_approval_email
   end
 
   private
