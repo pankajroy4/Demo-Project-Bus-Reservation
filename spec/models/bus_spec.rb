@@ -1,22 +1,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Bus, type: :model do
-  let(:bus_owner) { BusOwner.new(name: "Angad", email: "owner@gmail.com", password: "password", password_confirmation: "password", user_type: "bus_owner") }
+
+describe Bus do
 
   before do
-    @bus = Bus.new(
-      name: "Volvo Bus",
-      route: "Patna - Delhi",
-      total_seat: 50,
-      registration_no: "AB1243242345",
-      bus_owner: bus_owner
-    )
+    @bus = FactoryBot.create(:bus)
   end
 
   it "is valid with valid attributes" do
     expect(@bus).to be_valid
-  end
+  end                                    
 
   it "is not valid without a name" do
     @bus.name = ""
@@ -40,24 +34,26 @@ RSpec.describe Bus, type: :model do
 
   it "is not valid with a duplicate registration_no" do
     duplicate_bus = @bus.dup
-    @bus.save
+    duplicate_bus.save
     expect(duplicate_bus).not_to be_valid
   end
-
-  it "disapproves a bus" do
-    @bus.approved = true
-    @bus.disapprove!
-    expect(@bus.approved).to be_falsey
-  end
-
-  it "approves a bus" do
+  
+  it "approves and send email" do
     @bus.approved = false
-    @bus.approve!
+    expect {@bus.approve!}.to have_enqueued_job(ApprovalEmailsJob).on_queue("default")
     expect(@bus.approved).to be_truthy
   end
 
+  it "disapproves and delete all reservations and send email" do
+    @bus.approved = true
+    expect{@bus.disapprove! }.to have_enqueued_job(ApprovalEmailsJob).on_queue("default")
+    expect(@bus.approved).to be_falsey
+    expect(@bus.reservations.count).to eq(0)
+  end
+
   it "creates seats after creating a bus" do
-    expect { @bus.save }.to change(Seat, :count).by(50)
+    @bus.save
+    expect(@bus.seats.count).to eq(@bus.total_seat)
   end
 
   it "adjusts seats when total_seat is updated" do
@@ -68,11 +64,8 @@ RSpec.describe Bus, type: :model do
 
   it "deletes seats when a bus is destroyed" do
     @bus.save
-    expect { @bus.destroy }.to change(Seat, :count).by(-50)
-  end
-
-  it "sends approval email after updating approval status" do
-    expect { @bus.approve! }.to have_enqueued_job(ApprovalEmailsJob).with(@bus)
+    @bus.destroy
+    expect(@bus.seats.count).to eq(0)
   end
 
 end
