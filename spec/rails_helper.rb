@@ -4,9 +4,11 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-
+require 'rspec/rails' #added
+require 'spec_helper' #added
+require 'shoulda/matchers' #added
+require 'sidekiq/testing' #added
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -41,7 +43,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller  #added
   config.include Devise::Test::IntegrationHelpers, type: :request   #added
   config.include FactoryBot::Syntax::Methods  #added
-  require 'sidekiq/testing'  #added
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model) #added
 
   config.before(:each, type: :request) do
     host! 'localhost:3000' # Change to match your development server's host and port

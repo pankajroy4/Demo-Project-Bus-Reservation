@@ -3,6 +3,13 @@ class Reservation < ApplicationRecord
   belongs_to :user
   belongs_to :seat
   validates :date, presence: { message: "should be given" }
+  validate :bus_must_be_approved
+
+  def bus_must_be_approved
+    unless bus&.approved?
+      errors.add(:base, "Bus must be approved to create a reservation")
+    end
+  end
 
   def self.display_searched_date_seats(bus, date)
     reservations_on_searched_date = bus.reservations.where(date: date)

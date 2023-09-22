@@ -3,8 +3,15 @@ FactoryBot.define do
     name { "Volvo Bus" }
     route { "Patna - Delhi" }
     total_seat { 50 }
-    registration_no { "AB12345" }
+    sequence :registration_no do |n|
+      "MP #{n}123456"
+    end
     approved { false }
     association :bus_owner
+    
+    trait :approved_bus do
+      approved { true }
+    end
   end
 end
+

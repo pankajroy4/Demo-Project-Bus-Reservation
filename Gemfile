@@ -58,12 +58,13 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # gem 'rspec-rails'
   # gem 'spring-commands-rspec'
-  gem 'rspec-rails', '~> 6.0.3' # Use the correct version you intend to use
-  gem 'rspec-core', '~> 3.12.2'
-  gem 'rspec-expectations', '~> 3.12.3'
-  gem 'rspec-mocks', '~> 3.12.6'
-  gem 'rspec-support', '~> 3.12.1'
+  gem 'rspec-rails' # Use the correct version you intend to use
+  gem 'rspec-core'
+  gem 'rspec-expectations'
+  gem 'rspec-mocks'
+  gem 'rspec-support'
   gem 'factory_bot_rails'
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
