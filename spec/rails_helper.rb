@@ -1,5 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
+require 'spec_helper' #added
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -38,8 +38,10 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::ControllerHelpers, type: :controller  #added
+  config.include Devise::Test::IntegrationHelpers, type: :request   #added
+  config.include FactoryBot::Syntax::Methods  #added
+  require 'sidekiq/testing'  #added
 
   config.before(:each, type: :request) do
     host! 'localhost:3000' # Change to match your development server's host and port

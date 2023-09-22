@@ -63,6 +63,7 @@ group :development, :test do
   gem 'rspec-expectations', '~> 3.12.3'
   gem 'rspec-mocks', '~> 3.12.6'
   gem 'rspec-support', '~> 3.12.1'
+  gem 'factory_bot_rails'
 end
 
 group :development do

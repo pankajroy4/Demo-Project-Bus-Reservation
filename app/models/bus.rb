@@ -17,14 +17,18 @@ class Bus < ApplicationRecord
   }
 
   def disapprove!
+    return unless approved?
     update(approved: false)
-    send_approval_email
     reservations.delete_all
+    send_approval_email
+    true
   end
 
   def approve!
+    return if approved?
     update(approved: true)
     send_approval_email
+    true
   end
 
   private
@@ -52,16 +56,20 @@ class Bus < ApplicationRecord
     end
   end
   
-  private
   def send_approval_email
     ApprovalEmailsJob.set(wait: 1.week).perform_later(self)
   end
 
 end
 
+
+
+
 # NOTE: delete_all method will bypass model validations and callbacks ,So in case ,we do not want to bypass validations and callbacks ,use destroy, like: 
 # seats.where(bus_id: id).where("seat_no > ?", total_seat).destroy_all
 
 # Behind the scence for =>  has_one_attached :main_image
-    # has_one :main_image_attachment, dependent: :destroy
-    # has_one :main_image_blob, through:  :main_image_attachment
+  # has_one :main_image_attachment, dependent: :destroy
+  # has_one :main_image_blob, through:  :main_image_attachment
+
+  
