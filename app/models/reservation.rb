@@ -19,13 +19,13 @@ class Reservation < ApplicationRecord
 
   def self.check_booked?(seat_id, bus_id,date)
     result = Reservation.where(seat_id: seat_id, date: date, bus_id: bus_id)
-    result.blank? 
+    !(result.blank?) 
   end
 
   def self.create_reservations(user_id, bus_id, seat_ids, date)
     return false if seat_ids.blank?
     reservations = seat_ids.map do |seat_id|
-      next unless Reservation.check_booked?(seat_id, bus_id, date)
+      next if Reservation.check_booked?(seat_id, bus_id, date)
       Reservation.new(user_id: user_id, bus_id: bus_id, seat_id: seat_id, date: date)
     end
     Reservation.transaction do

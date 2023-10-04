@@ -1,9 +1,7 @@
 FactoryBot.define do
   factory :bus_owner , class: "User" do
-    name { "BusOwner" }
-    sequence :email do |n|
-      "busowner#{n}@gmail.com"
-    end
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
     password { "111111" }
     sequence :registration_no do |n|
       "BUSOWNER#{n}12345"

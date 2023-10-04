@@ -3,7 +3,8 @@ class Bus < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :seats, dependent: :destroy
   has_one_attached :main_image
-  validates :name, :route, :total_seat, :registration_no, presence: true
+  validates :name, :route, :registration_no, presence: true
+  validates :total_seat, presence: true, numericality: { greater_than_or_equal_to: 10 }
   validates :registration_no, uniqueness: {message: "must be unique and govt. verified"}
   
   after_create :create_seats

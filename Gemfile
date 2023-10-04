@@ -61,12 +61,13 @@ group :development, :test do
   gem 'rspec-rails' # Use the correct version you intend to use
   gem 'rspec-core'
   gem 'rspec-expectations'
-  gem 'rspec-mocks'
   gem 'rspec-support'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'rspec-mocks'
+  gem 'faker', '~> 3.2.1'
+  gem 'rails-controller-testing'
 end
-
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
@@ -89,5 +90,5 @@ end
 gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
 gem "sidekiq","~> 7.0.9"
-
+gem 'rufo'
 

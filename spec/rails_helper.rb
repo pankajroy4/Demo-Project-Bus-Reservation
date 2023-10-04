@@ -9,6 +9,8 @@ require 'rspec/rails' #added
 require 'spec_helper' #added
 require 'shoulda/matchers' #added
 require 'sidekiq/testing' #added
+require 'rspec/mocks' #added
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -47,6 +49,14 @@ RSpec.configure do |config|
 
   config.before(:each, type: :request) do
     host! 'localhost:3000' # Change to match your development server's host and port
+  end
+
+  config.after(:each) do  #added
+    RSpec::Mocks.verify # Verifies any messages received
+  end
+
+  config.after(:all) do #added
+    RSpec::Mocks.teardown # Cleans up the mocks and resets them
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

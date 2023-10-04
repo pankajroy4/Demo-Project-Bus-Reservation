@@ -1,21 +1,22 @@
 
 require 'rails_helper'
+require 'shoulda/matchers'
 
-describe Bus do
+RSpec.describe Bus,  type: :model do
   let(:bus) { create(:bus) }
 
   let(:user) { create(:user) }
   
   let(:duplicate_bus) { bus.dup }
   
-  describe "Associations" do
+  context "Associations" do
     it { is_expected.to belong_to(:bus_owner).class_name("User").with_foreign_key("bus_owner_id") }
     it { is_expected.to have_many(:reservations).dependent(:destroy) }
     it { is_expected.to have_many(:seats).dependent(:destroy) }
     it { is_expected.to have_one_attached(:main_image) } 
   end
 
-  describe "Validations" do 
+  context "Validations" do 
     it "is valid with valid attributes" do
       expect(bus).to be_valid
     end                                    
@@ -41,7 +42,7 @@ describe Bus do
 
   end 
 
-  describe "Callbacks" do
+  context "Callbacks" do
     it "creates seats after creating a bus" do
       expect(bus.seats.count).to eq(bus.total_seat)
     end
@@ -64,24 +65,24 @@ describe Bus do
     end
   end
 
-  describe "Scopes" do
+  context "Scopes" do
     it "returns approved buses" do      
       approved_bus = FactoryBot.create(:bus, :approved_bus)
-      expect(Bus.approved).to include(approved_bus) 
+      expect(Bus.approved).to match_array(approved_bus)
     end
 
     it "do not return unapproved bus" do 
-      expect(Bus.approved).not_to include(bus)
+      expect(Bus.approved).not_to match_array(bus)
     end
 
     it "searches by name or route" do
-      expect(Bus.search_by_name_or_route("Volvo Bus")).to include(bus)
-      expect(Bus.search_by_name_or_route("Patna - Delhi")).to include(bus)
+      expect(Bus.search_by_name_or_route("Volvo Bus")).to match_array(bus)
+      expect(Bus.search_by_name_or_route("Patna - Delhi")).to match_array(bus)
       expect(Bus.search_by_name_or_route("Mybus")).to be_empty
     end
   end
 
-  describe "Methods" do
+  context "Methods" do
     it "approves and send email" do
       bus.approved = false
       expect {bus.approve!}.to have_enqueued_job(ApprovalEmailsJob).on_queue("default")
