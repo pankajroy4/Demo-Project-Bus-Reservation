@@ -1,13 +1,13 @@
 class BusesController < ApplicationController
-  # before_action :authenticate_bus_owner!, only: [:new, :edit, :update, :destroy]
-  # before_action :authenticate_admin_or_bus_owner!, only: [:index]
+  before_action :authenticate_bus_owner!, only: [:new, :edit, :update, :destroy]
+  before_action :authenticate_admin_or_bus_owner!, only: [:index]
   before_action :authorize_bus_owner, only: [:edit, :update, :destroy, :index]
 
   def reservations_list
     @date = params[:date]
     @bus = Bus.find(params[:bus_id])
     @reservations = @bus.reservations.where(date: @date)
-    # authorize @bus
+    authorize @bus
   end
 
   def new
@@ -65,6 +65,6 @@ class BusesController < ApplicationController
 
   def authorize_bus_owner
     @busowner = BusOwner.find_by(id: params[:bus_owner_id])
-    # authorize @busowner, policy_class: BusPolicy
+    authorize @busowner, policy_class: BusPolicy
   end
 end

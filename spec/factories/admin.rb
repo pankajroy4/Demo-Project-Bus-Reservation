@@ -6,5 +6,6 @@ FactoryBot.define do
     end
     password { "111111" }
     user_type { "admin" }
+    confirmed_at { Time.now }
   end
 end

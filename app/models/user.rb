@@ -1,13 +1,12 @@
-
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, :confirmable
   validates :name, presence: true
   has_many :reservations, dependent: :destroy
-  enum user_type: { admin: 0, bus_owner: 1, user: 2 }   
+  enum user_type: { admin: 0, bus_owner: 1, user: 2 }
 
   def generate_otp
-    self.otp = '%06d' % rand(10**6)
+    self.otp = "%06d" % rand(10 ** 6)
     self.otp_sent_at = Time.now
     self.save!
     self.otp
@@ -26,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def generate_and_send_otp
-    otp = generate_otp 
+    otp = generate_otp
     update(otp: otp)
     OtpVerification.otp_verification(self, otp).deliver_now
   end

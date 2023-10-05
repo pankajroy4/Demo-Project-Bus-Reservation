@@ -1,16 +1,18 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper' #added
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
+require "spec_helper" #added
+require "factory_bot_rails" #added
+
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'rspec/rails' #added
-require 'spec_helper' #added
-require 'shoulda/matchers' #added
-require 'sidekiq/testing' #added
-require 'rspec/mocks' #added
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+require "rspec/rails" #added
+require "spec_helper" #added
+require "shoulda/matchers" #added
+require "sidekiq/testing" #added
+require "rspec/mocks" #added
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -36,22 +38,26 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.before(:each) do
+    ActionMailer::Base.deliveries.clear
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-  
+
   config.include Devise::Test::ControllerHelpers, type: :controller  #added
   config.include Devise::Test::IntegrationHelpers, type: :request   #added
   config.include FactoryBot::Syntax::Methods  #added
+  config.include Shoulda::Matchers::ActionController, type: :controller #added
   config.include(Shoulda::Matchers::ActiveRecord, type: :model) #added
 
   config.before(:each, type: :request) do
-    host! 'localhost:3000' # Change to match your development server's host and port
+    host! "localhost:3000" # Change to match your development server's host and port
   end
 
-  config.after(:each) do  #added
+  config.after(:each) do #added
     RSpec::Mocks.verify # Verifies any messages received
   end
 
@@ -81,4 +87,12 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end

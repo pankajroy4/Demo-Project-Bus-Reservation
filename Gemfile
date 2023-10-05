@@ -3,8 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.0"
 
-gem 'bootstrap', '~>5.1', '>=5.1.3'  #Added
-gem 'rotp'
+gem "bootstrap", "~>5.1", ">=5.1.3"  #Added
+gem "rotp"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.7"
@@ -31,7 +31,6 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 
@@ -56,18 +55,17 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  # gem 'rspec-rails'
-  # gem 'spring-commands-rspec'
-  gem 'rspec-rails' # Use the correct version you intend to use
-  gem 'rspec-core'
-  gem 'rspec-expectations'
-  gem 'rspec-support'
-  gem 'factory_bot_rails'
-  gem 'shoulda-matchers', '~> 5.0'
-  gem 'rspec-mocks'
-  gem 'faker', '~> 3.2.1'
-  gem 'rails-controller-testing'
+  gem "rspec-rails", "~> 6.0.3"
+  gem "rspec-core"
+  gem "rspec-expectations"
+  gem "rspec-support"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 5.3.0"
+  gem "rspec-mocks"
+  gem "faker", "~> 3.2.1"
+  gem "rails-controller-testing"
 end
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
@@ -89,6 +87,7 @@ end
 
 gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
-gem "sidekiq","~> 7.0.9"
-gem 'rufo'
+gem "sidekiq", "~> 7.0.9"
+gem "rufo"
 
+gem "pry", "~> 0.14.2"
