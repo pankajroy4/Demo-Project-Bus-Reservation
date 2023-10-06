@@ -7,7 +7,7 @@
 <% end %>
 
 <%= turbo_stream.update "book_#{@bus.id}" do%>
-    <%= link_to "Book Ticket", new_ticket_path(@bus), class: "btn btn-outline-success  m-2 book", data: {turbo_frame: "_top"} %>
+    <%= link_to "Book Ticket", new_bus_reservation_path(@bus), class: "btn btn-outline-success  m-2 book", data: {turbo_frame: "_top"} %>
 <% end %>
 
 <%= turbo_stream.update "flash", partial: "layouts/flash" %>
