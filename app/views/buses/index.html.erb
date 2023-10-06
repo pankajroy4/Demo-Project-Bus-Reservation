@@ -35,7 +35,7 @@
 							      <% end %>
                     <%= turbo_frame_tag "book_#{bus.id}" do %>
 								      <% if bus.approved? %>
-									      <%= link_to "Book Ticket", new_ticket_path(bus.id), class: "btn btn-outline-success  m-2 book" ,data: {turbo_frame: "_top"}  %>
+									      <%= link_to "Book Ticket", new_bus_reservation_path(bus.id), class: "btn btn-outline-success  m-2 book" ,data: {turbo_frame: "_top"}  %>
 								      <% end %>
 							      <% end %>
                   </div>
