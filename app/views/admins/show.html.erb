@@ -29,18 +29,13 @@
 		<% if current_user?(@admin) %>
 			<div class = "row pt-1">
 				<div class = "col-6 mb-3">
-						<h6><%= link_to "Update Account", edit_user_registration_path, class: "btn btn-outline-success mt-2" %> </h6> 
+					<h6><%= link_to "Bus Owner List", bus_owners_path, class: "btn btn-outline-success mt-2" %></h6>
 				</div>
 				<div class = "col-6 mb-3">
-						<h6><%= button_to "Delete Account", user_registration_path, method: :delete, class: "btn btn-outline-danger mt-2"%></h6>
+					<h6><%= link_to "Update Account", edit_user_registration_path, class: "btn btn-outline-success mt-2" %> </h6> 
 				</div>
 			</div>
 		<% end %>
-		<div class = "row pt-1">
-			<div class = "col-6 mb-3">
-				<h6><%= link_to "Bus Owner List", bus_owners_path, class: "btn btn-outline-success mt-2" %></h6>
-			</div>
-		</div>
 	</div>
 </div>
 <%= render "shared/container2" %>
